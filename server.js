@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const { Client } = require("pg");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
@@ -11,13 +11,6 @@ const {
   deleteTodo
 } = require("./controller/todoController");
 const bodyParser = require("body-parser");
-const { Pool } = require("pg");
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,18 +21,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
   res.send("yoooo");
   console.log("yoooooooooooos");
 }); */
-app.get("/db", async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query("SELECT * FROM test_table");
-    const results = { results: result ? result.rows : null };
-    res.render("pages/db", results);
-    client.release();
-  } catch (err) {
-    console.error(err);
-    res.send("Error " + err);
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
   }
 });
+
+client.connect();
+
+client.query(
+  "SELECT table_schema,table_name FROM information_schema.tables;",
+  (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+    }
+    client.end();
+  }
+);
 app.get("/todos", async (req, res) => {
   const todo = await getAllTodo();
   res.status(200).json(todo);
