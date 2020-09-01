@@ -17,10 +17,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //ROUTES//
 //getAll todo
-app.use("/", (req, res) => {
+/* app.use("/", (req, res) => {
   res.send("yoooo");
   console.log("yoooooooooooos");
-});
+}); */
 app.get("/todos", async (req, res) => {
   const todo = await getAllTodo();
   res.status(200).json(todo);
