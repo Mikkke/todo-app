@@ -17,10 +17,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //ROUTES//
 //getAll todo
+app.use("/", (req, res) => {
+  res.send("yoooo");
+});
 app.get("/todos", async (req, res) => {
   const todo = await getAllTodo();
   res.status(200).json(todo);
 });
+
 //get a todo
 app.get("/todos/:id", async (req, res) => {
   const { id } = req.params;
