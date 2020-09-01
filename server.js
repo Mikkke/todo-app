@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 5050 || process.env.PORT;
+const port = process.env.PORT || 5050;
 const {
   addTodo,
   getAllTodo,
