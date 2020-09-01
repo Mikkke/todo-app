@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //getAll todo
 app.use("/", (req, res) => {
   res.send("yoooo");
+  console.log("yoooooooooooos");
 });
 app.get("/todos", async (req, res) => {
   const todo = await getAllTodo();
