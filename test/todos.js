@@ -1,5 +1,5 @@
 const chai = require("chai");
-const server = require("../server");
+const server = require("../server.js");
 const chaiHttp = require("chai-http");
 
 //Asertion style
