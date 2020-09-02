@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
   res.send("yoooo");
   console.log("yoooooooooooos");
 }); */
-
+console.log("process.env.DATABASE_URL, :>> ", process.env.DATABASE_URL);
 app.get("/todos", async (req, res) => {
   const todo = await getAllTodo();
   res.status(200).json(todo);
