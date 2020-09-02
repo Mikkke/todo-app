@@ -1,5 +1,4 @@
 require("dotenv").config();
-const { Client } = require("pg");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
@@ -22,25 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
   console.log("yoooooooooooos");
 }); */
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-client.connect();
-
-client.query(
-  "SELECT table_schema,table_name FROM information_schema.tables;",
-  (err, res) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
-    }
-    client.end();
-  }
-);
 app.get("/todos", async (req, res) => {
   const todo = await getAllTodo();
   res.status(200).json(todo);
