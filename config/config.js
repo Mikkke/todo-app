@@ -10,12 +10,6 @@ module.exports = {
   },
   production: {
     use_env_variable: "DATABASE_URL",
-    pool: {
-      min: 0,
-      max: 5,
-      idle: 15000,
-      acquire: 30000
-    },
     dialect: "postgres",
     dialectOptions: {
       ssl: true,
